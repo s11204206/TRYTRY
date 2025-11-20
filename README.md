@@ -1,38 +1,27 @@
 # TRYTRY
-<input type="text" id="message" placeholder="輸入訊息…" />
-<button onclick="sendMessage()">送出</button>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>反霸凌聊天系統</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>反霸凌資源中心</h1>
+  </header>
 
-<div id="reply" style="margin-top:10px; font-weight:bold;"></div>
+  <main>
+    <section id="chat">
+      <div id="messages" aria-live="polite"></div>
+      <div id="input-area">
+        <input id="chat-input" type="text" placeholder="輸入訊息..." />
+        <button id="send-btn">送出</button>
+      </div>
+    </section>
+  </main>
 
-<script>
-async function sendMessage() {
-  const userMessage = document.getElementById("message").value.trim();
-  if (!userMessage) {
-    alert("請輸入訊息！");
-    return;
-  }
-
-  // 顯示載入中提示
-  const replyDiv = document.getElementById("reply");
-  replyDiv.innerText = "回覆中…";
-
-  try {
-    const response = await fetch("https://bullying-bot.onrender.com/reply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMessage })
-    });
-
-    if (!response.ok) throw new Error("伺服器錯誤");
-
-    const data = await response.json();
-    replyDiv.innerText = data.reply;
-  } catch (err) {
-    replyDiv.innerText = "無法取得回覆，請稍後再試。";
-    console.error(err);
-  }
-
-  // 清空輸入框
-  document.getElementById("message").value = "";
-}
-</script>
+  <script src="script.js"></script>
+</body>
+</html>
